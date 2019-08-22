@@ -80,15 +80,17 @@ class JSON2HTMLUnbuilder {
   static children(nodeEl) {
     const children = [];
     for (const index in nodeEl.childNodes) {
-      if (nodeEl.childNodes[index].nodeType === Node.ELEMENT_NODE) {
-        children.push(JSON2HTMLUnbuilder.node2json(nodeEl.childNodes[index]));
+      const node = nodeEl.childNodes[index];
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        children.push(JSON2HTMLUnbuilder.node2json(node));
       }
-      if (nodeEl.childNodes[index].nodeType === Node.TEXT_NODE) {
-        children.push(nodeEl.childNodes[index].textContent);
+      if (node.nodeType === Node.TEXT_NODE) {
+        children.push(node.textContent.trim());
       }
     }
-    return children;
+    return children.filter((child) => child);
   }
+
   static node2json(nodeEl) {
     return {
       tag: nodeEl.tagName.toLowerCase(),
