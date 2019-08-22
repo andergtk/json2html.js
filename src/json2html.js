@@ -92,10 +92,12 @@ class JSON2HTMLUnbuilder {
   }
 
   static node2json(nodeEl) {
+    const attributes = JSON2HTMLUnbuilder.attributes(nodeEl);
+    const children = JSON2HTMLUnbuilder.children(nodeEl);
     return {
       tag: nodeEl.tagName.toLowerCase(),
-      attributes: JSON2HTMLUnbuilder.attributes(nodeEl),
-      children: JSON2HTMLUnbuilder.children(nodeEl),
+      ...(Object.keys(attributes).length && {attributes}),
+      ...(children.length && {children})
     };
   }
 };
